@@ -1,2 +1,13 @@
 ---
-# defaults file for postfix
+
+postfix_myhostname: ""
+postfix_mydomain: ""
+postfix_myorigin: ""
+postfix_relayhost: ""
+
+postfix_ses_integration: false
+postfix_use_sasl: false
+postfix_use_tls: false
+postfix_use_generic: true
+postfix_sasl_username: "user"
+postfix_sasl_password: "password"
