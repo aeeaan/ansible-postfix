@@ -85,7 +85,6 @@ myhostname = {{ postfix_myhostname }}
 # $mydomain is used as a default value for many other configuration
 # parameters.
 #
-#mydomain = domain.tld
 
 {% if postfix_mydomain|default(false) %}
 mydomain = {{ postfix_mydomain }}
@@ -329,10 +328,6 @@ unknown_local_recipient_reject_code = 550
 #relayhost = uucphost
 #relayhost = [an.ip.add.ress]
 
-{% if postfix_relayhost %}
-relayhost = email-smtp.us-east-1.amazonaws.com:587
-{% endif %}
-
 # REJECTING UNKNOWN RELAY USERS
 #
 # The relay_recipient_maps parameter specifies optional lookup tables
@@ -479,8 +474,6 @@ alias_database = hash:/etc/aliases
 # the main.cf file, otherwise the SMTP server will reject mail for    
 # non-UNIX accounts with "User unknown in local recipient table".
 #
-# Cyrus IMAP over LMTP. Specify ``lmtpunix      cmd="lmtpd"
-# listen="/var/imap/socket/lmtp" prefork=0'' in cyrus.conf.
 #mailbox_transport = lmtp:unix:/var/lib/imap/socket/lmtp
 
 # If using the cyrus-imapd IMAP server deliver local mail to the IMAP
@@ -503,8 +496,7 @@ alias_database = hash:/etc/aliases
 # how many simultaneous LMTP sessions will be permitted to the Cyrus
 # message store. 
 #
-# Cyrus IMAP via command line. Uncomment the "cyrus...pipe" and
-# subsequent line in master.cf.
+# To use the old cyrus deliver program you have to set:
 #mailbox_transport = cyrus
 
 # The fallback_transport specifies the optional transport in master.cf
@@ -697,11 +689,11 @@ manpage_directory = /usr/share/man
 # sample_directory: The location of the Postfix sample configuration files.
 # This parameter is obsolete as of Postfix 2.1.
 #
-sample_directory = /usr/share/doc/postfix-2.10.1/samples
+sample_directory = /usr/share/doc/postfix-2.6.6/samples
 
 # readme_directory: The location of the Postfix README files.
 #
-readme_directory = /usr/share/doc/postfix-2.10.1/README_FILES
+readme_directory = /usr/share/doc/postfix-2.6.6/README_FILES
 
 {% if postfix_use_sasl %}
 smtp_sasl_auth_enable = yes
