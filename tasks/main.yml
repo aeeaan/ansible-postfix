@@ -1,13 +1,10 @@
 ---
-# tasks file for postfix
-
-- name: Ensure postfix is installed (RedHat).
-  yum: pkg=postfix state=installed
-  when: ansible_os_family == 'RedHat'
+- name: Ensure postfix is installed
+  yum: name=postfix state=installed
 
 - name: Install sasl plain for SES
-  yum: pkg=cyrus-sasl-plain state=installed
-  when: ansible_os_family == 'RedHat' and postfix_ses_integration == true
+  yum: name=cyrus-sasl-plain state=installed
+  when: postfix_ses_integration == true
 
 - name: Ensure postfix is started and enabled at boot.
   service: name=postfix state=started enabled=yes
