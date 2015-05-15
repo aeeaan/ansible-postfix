@@ -1,13 +1,23 @@
 ---
 - name: Ensure postfix is installed
   yum: name=postfix state=installed
+  tags:
+    - postfix
+    - packages
 
 - name: Install sasl plain for SES
   yum: name=cyrus-sasl-plain state=installed
   when: postfix_ses_integration == true
+  tags:
+    - postfix
+    - packages
 
 - name: Ensure postfix is started and enabled at boot.
   service: name=postfix state=started enabled=yes
+  tags:
+    - postfix
+    - configuration
+    - services
 
 - name: Set facts for SES
   set_fact:
@@ -16,6 +26,9 @@
       postfix_destination_concurrency: "1"
       postfix_destination_rate: "1s"
   when: postfix_ses_integration == true
+  tags:
+    - postfix
+    - configuration
 
 - name: Configure master.cf
   template: src={{ item }} dest=/etc/postfix/master.cf mode=0644 owner=root group=root
@@ -24,6 +37,9 @@
        - master.cf.{{ ansible_os_family }}{{ ansible_distribution_major_version }}.j2
        - master.cf.j2
   notify: restart postfix
+  tags:
+    - postfix
+    - configuration
 
 - name: Configure main.cf
   template: src={{ item }} dest=/etc/postfix/main.cf mode=0644 owner=root group=root
@@ -32,33 +48,40 @@
        - main.cf.{{ ansible_os_family }}{{ ansible_distribution_major_version }}.j2
        - main.cf.j2
   notify: restart postfix
+  tags:
+    - postfix
+    - configuration
 
 - name: create sasl_password configuration
   template: src=sasl_passwd.j2 dest=/etc/postfix/sasl_passwd mode=0600 owner=root group=root
   notify: reload postfix
   register: postfix_sasl_passwd_result
   when: postfix_sasl_password is defined
+  tags:
+    - postfix
+    - configuration
 
 - name: ensure sasl_password is compiled
   shell: postmap /etc/postfix/sasl_passwd
   notify: reload postfix
   when: postfix_sasl_passwd_result | changed
+  tags:
+    - postfix
+    - configuration
 
 - name: create generic configuration
   template: src=generic.j2 dest=/etc/postfix/generic mode=0644 owner=root group=root
   notify: reload postfix
   register: postfix_generic_result
   when: postfix_use_generic == true
+  tags:
+    - postfix
+    - configuration
 
 - name: ensure generic is compiled
   shell: postmap /etc/postfix/generic
   notify: reload postfix
   when: postfix_generic_result | changed
-
-
-#- name: Configure root user email forwarding
-#  template: >
-#    src=root-forward.j2
-#    dest=/root/.forward
-#    mode=0644 owner=root group=root
-#  when: postfix_notify_email is defined
+  tags:
+    - postfix
+    - configuration
