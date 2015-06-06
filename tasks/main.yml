@@ -1,12 +1,12 @@
 ---
 - name: Ensure postfix is installed
-  yum: name=postfix state=installed
+  yum: name=postfix state=present
   tags:
     - postfix
     - packages
 
 - name: Install sasl plain for SES
-  yum: name=cyrus-sasl-plain state=installed
+  yum: name=cyrus-sasl-plain state=present
   when: postfix_ses_integration == true
   tags:
     - postfix
