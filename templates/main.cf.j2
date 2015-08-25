@@ -330,7 +330,7 @@ unknown_local_recipient_reject_code = 550
 #relayhost = [an.ip.add.ress]
 
 {% if postfix_relayhost %}
-relayhost = email-smtp.us-east-1.amazonaws.com:587
+relayhost = {{ postfix_relayhost }}
 {% endif %}
 
 # REJECTING UNKNOWN RELAY USERS
