@@ -64,7 +64,7 @@
 - name: ensure sasl_password is compiled
   shell: postmap /etc/postfix/sasl_passwd
   notify: reload postfix
-  when: postfix_sasl_passwd_result | changed
+  when: postfix_sasl_passwd_result is changed
   tags:
     - postfix
     - configuration
@@ -81,7 +81,7 @@
 - name: ensure generic is compiled
   shell: postmap /etc/postfix/generic
   notify: reload postfix
-  when: postfix_generic_result | changed
+  when: postfix_generic_result is changed
   tags:
     - postfix
     - configuration
