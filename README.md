@@ -17,6 +17,7 @@ Role Variables
 | postfix_use_generic		| true				|				|
 | postfix_sasl_username		| "user"			|				|
 | postfix_sasl_password		| "password"			|				|
+| postfix_inet_interfaces | "localhost" |     |
 
 Example Playbook
 ----------------

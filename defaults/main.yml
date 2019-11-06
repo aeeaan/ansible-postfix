@@ -5,6 +5,8 @@ postfix_mydomain: ""
 postfix_myorigin: ""
 postfix_relayhost: ""
 
+postfix_inet_interfaces: "localhost"
+
 postfix_ses_integration: false
 postfix_use_sasl: false
 postfix_use_tls: false
