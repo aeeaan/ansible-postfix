@@ -12,13 +12,6 @@
     - postfix
     - packages
 
-- name: Ensure postfix is started and enabled at boot.
-  service: name=postfix state=started enabled=yes
-  tags:
-    - postfix
-    - configuration
-    - services
-
 - name: Set facts for SES
   set_fact:
       postfix_use_sasl: true
@@ -85,3 +78,10 @@
   tags:
     - postfix
     - configuration
+
+- name: Ensure postfix is started and enabled at boot.
+  service: name=postfix state=started enabled=yes
+  tags:
+    - postfix
+    - configuration
+    - services
